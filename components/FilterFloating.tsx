@@ -3,6 +3,14 @@ export default function FilterFloating() {
   return(
     <div>
       Filter floating
+      <div>
+        <div>Search Bar Component</div>
+        Countries:
+        <div>
+          Country
+        </div>
+      </div>
+      Calendar
     </div>
   )
 }

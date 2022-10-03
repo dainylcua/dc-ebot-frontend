@@ -4,6 +4,12 @@ export default function Observations() {
   return(
     <div>
       Observations go here
+      <div>
+        Main header  
+      </div>
+      <div>
+        ObservationCards go here
+      </div>
     </div>
   )
 }
