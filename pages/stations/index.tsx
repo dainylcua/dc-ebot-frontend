@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroller"
 
 export default function Stations() {
   // TODO: Improve layout
+  // TODO: Complete filterStations function
   const getData = async () => {
     const res = await fetch(`http://localhost:3001/stations`)
     const data = await res.json();
@@ -37,6 +38,10 @@ export default function Stations() {
         setActiveIds(activeIds + itemCount)
       }, 2000)
     }
+  }
+
+  const filterStations = () => {
+
   }
 
   useEffect(() => {

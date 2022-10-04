@@ -1,13 +1,12 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Container from "../../components/Container"
+import Observations from "../../components/Observations"
 
 export default function StationPage() {
   // TODO: Get all information and display it well
   const router = useRouter()
   const { id } = router.query
-
-  
 
   const [stationData, setStationData] = useState({})
 
@@ -24,12 +23,14 @@ export default function StationPage() {
 
   return (
     <Container>
-      Hello world! Station id: {id}
       {
         stationData ?
-        <div>
-
-        </div>
+        <>
+          <h1>
+            Station id: {id}
+          </h1>
+          <Observations />
+        </>
         :
         <div>Loading station data...</div>
       }

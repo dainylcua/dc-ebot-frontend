@@ -1,19 +1,35 @@
 import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters, } from "../data/parameters"
-import { StationCollection } from "../types/main"
+import { Observation } from "../types/main"
 
-export default function ObservationRow(observationData: StationCollection) {
+export default function ObservationCard(observationData: Observation) {
+  const element = Object.keys(observationData)[0]
+  const properties = observationData[element]
+  const flags = [properties["mFlag"], properties["qFlag"], properties["sFlag"]]
+  const observationTime = observationData["observationTime"]
+  
+  const onHover = () => {
+    
+  }
+
   // TODO: Add observation information and layout
   return(
-    <div>
-      <h2>
-        Parameter Element
+    <div className="flex flex-row w-full">
+      <h2 className="justify-start">
+        {
+        `${element}`
+        // onHover, show description
+        }
       </h2>
-      <div>
+      <div className="flex items-end justify-end w-3/4">
         <div>
-          Value
+          {
+            `${properties.data}`
+          }
         </div>
+        {
+          
+        }
         <div>
-          Flags - expect 2 max for now
         </div>
       </div>
     </div>
