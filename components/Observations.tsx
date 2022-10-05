@@ -44,7 +44,11 @@ export default function Observations(data: DayData) {
         }
         return total
       }, {} as GroupedObservation)
-      // TODO: Still need to divide the averages
+
+      for(let element in formattedMonthlyTotal) {
+        let elementProperties = formattedMonthlyTotal[element]
+        elementProperties["average"] = elementProperties["average"]/daysInMonths[month]
+      }
   
       setMonthlyData((prevState) => ({
         ...prevState,
@@ -58,25 +62,35 @@ export default function Observations(data: DayData) {
     let daysPassed = 1
     let weeklyTotal: GroupedData = {}
     let weekValues: GroupedObservation = {} as GroupedObservation
-    for(let day in data) {
+    for(let day in data["data"]) {
       let dayOfTheWeek = (daysPassed) % 7
-      let elements = data[day]
+      let elements = data["data"][day]
       for(let element in elements) {
+        let value = elements[element]["data"]
         if(weekValues[element]) {
-          if(weekValues[element]["peak"][0] < element["data"]) weekValues[element]["peak"] = [element["data"], day]
-          if(weekValues[element]["lowest"][0] > element["data"]) weekValues[element]["lowest"] = [element["data"], day]
-          weekValues[element]["average"] += element["data"]
+          if(weekValues[element]["peak"][0] < value) weekValues[element]["peak"] = [value, day]
+          if(weekValues[element]["lowest"][0] > value) weekValues[element]["lowest"] = [value, day]
+          weekValues[element]["average"] += value
         } else {
           weekValues[element] = {
-            average: element["data"],
-            peak: [element["data"], day],
-            lowest: [element["data"], day],
+            average: value,
+            peak: [value, day],
+            lowest: [value, day],
           }
         }
       }
       if(dayOfTheWeek === 0) {
         weeklyTotal[week] = weekValues
         weekValues = {}
+        week += 1
+      }
+      daysPassed += 1
+    }
+    for(let day in weeklyTotal) {
+      for(let element in weeklyTotal[day]) {
+        let elementProperties = weeklyTotal[day][element]
+        console.log(elementProperties)
+        elementProperties["average"] = elementProperties["average"]/7
       }
     }
     setWeeklyData(weeklyTotal)
