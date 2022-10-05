@@ -1,4 +1,4 @@
-export type Properties = {
+export type Parameters = {
   data: number;
   mFlag: string;
   qFlag: string;
@@ -7,22 +7,7 @@ export type Properties = {
 }
 
 export type Observation = {
-  [element: string]: Properties
-}
-
-export type MonthData = {
-  "01": Observation,
-  "02": Observation,
-  "03": Observation,
-  "04": Observation,
-  "05": Observation,
-  "06": Observation,
-  "07": Observation,
-  "08": Observation,
-  "09": Observation,
-  "10": Observation,
-  "11": Observation,
-  "12": Observation
+  [element: string]: Parameters
 }
 
 export type DayData = {
@@ -31,4 +16,19 @@ export type DayData = {
 
 export type StationCollection = {
   [id: string]: DayData
+}
+
+
+export type GroupedData = {
+  [date: string]: GroupedObservation;
+}
+
+export type GroupedObservation = {
+  [element: string]: GroupedParameters
+}
+
+export type GroupedParameters = {
+  average: number;
+  peak: [number, string];
+  lowest: [number, string];
 }

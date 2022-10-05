@@ -1,65 +1,110 @@
-import ObservationCard from "./ObservationCard"
-import { DayData, MonthData } from "../types/main"
+import ObservationRow from "./ObservationRow"
+import { DayData, GroupedData, GroupedObservation, GroupedParameters, Observation } from "../types/main"
 import { daysInMonths } from "../data/monthDays"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Observations(data: DayData) {
   // TODO: Add observation container styling
   // TODO: Add filter by day, week, or month capability
   // TODO: Infinite scroll if day?
 
-  const [monthlyData, setMonthlyData] = useState<MonthData>({
-    "01": {},
-    "02": {},
-    "03": {},
-    "04": {},
-    "05": {},
-    "06": {},
-    "07": {},
-    "08": {},
-    "09": {},
-    "10": {},
-    "11": {},
-    "12": {},
-  })
+  const [monthlyData, setMonthlyData] = useState<GroupedData>({} as GroupedData)
+  const [weeklyData, setWeeklyData] = useState<GroupedData>({} as GroupedData)
+  const [selectedData, setSelectedData] = useState(data["data"])
+  const [period, setPeriod] = useState("day")
 
-
-
-  const getMonthlyAverages = (month: string) => {
-    let monthStationData: DayData = {};
-    if(month.length === 1) month = '0' + month; 
-
-    if(daysInMonths.hasOwnProperty(month)) {
+  const getMonthlyAverages = () => {
+    for(let i=1; i<=12; i++) {
+      let month = i.toString()
+      let monthlyTotal = []
+      if(month.length === 1) month = '0' + month
+  
       const days = daysInMonths[month as keyof typeof daysInMonths]
       for(let i=1; i<=days; i++) {
-        let day = i.toString().length === 1 ? '0' + i.toString() : i.toString();
-        let date = `2017${month}${day}`;
-        monthStationData[date] = data[date]
+        let day = i.toString().length === 1 ? '0' + i.toString() : i.toString()
+        let date = `2017${month}${day}`
+        monthlyTotal.push(data["data"][date])
+      }
+  
+      const formattedMonthlyTotal: GroupedObservation = monthlyTotal.reduce((total, day) => {
+        for(let element in day) {
+          let dayValue = day[element]["data"]
+          if(total.hasOwnProperty(element)) {
+            let totalValue = total[element]
+            if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, Object.keys(day)[0]]
+            if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, Object.keys(day)[0]]
+            totalValue["average"] += dayValue
+          } else {
+            total[element] = {
+              average: dayValue,
+              peak: [dayValue, Object.keys(day)[0]],
+              lowest: [dayValue, Object.keys(day)[0]],
+            }
+          }
+        }
+        return total
+      }, {} as GroupedObservation)
+      // TODO: Still need to divide the averages
+  
+      setMonthlyData((prevState) => ({
+        ...prevState,
+        [month]: formattedMonthlyTotal
+      }))
+    }
+  }
+
+  const getWeeklyAverages = () => {
+    let week = 1
+    let daysPassed = 1
+    let weeklyTotal: GroupedData = {}
+    let weekValues: GroupedObservation = {} as GroupedObservation
+    for(let day in data) {
+      let dayOfTheWeek = (daysPassed) % 7
+      let elements = data[day]
+      for(let element in elements) {
+        if(weekValues[element]) {
+          if(weekValues[element]["peak"][0] < element["data"]) weekValues[element]["peak"] = [element["data"], day]
+          if(weekValues[element]["lowest"][0] > element["data"]) weekValues[element]["lowest"] = [element["data"], day]
+          weekValues[element]["average"] += element["data"]
+        } else {
+          weekValues[element] = {
+            average: element["data"],
+            peak: [element["data"], day],
+            lowest: [element["data"], day],
+          }
+        }
+      }
+      if(dayOfTheWeek === 0) {
+        weeklyTotal[week] = weekValues
+        weekValues = {}
       }
     }
-    setMonthlyData((prevState) => ({
-      ...prevState,
-      [month]: monthStationData
-    }))
+    setWeeklyData(weeklyTotal)
   }
 
-  const getWeeklyAverages = (data: DayData) => {
+  useEffect(() => {
+    if(data["data"]) {
+      if(data["data"]["20171231"]) {
+        getMonthlyAverages()
+        getWeeklyAverages()
+        console.log(`monthly`, monthlyData)
+        console.log(weeklyData)
+      }
+    }
+  }, [data])
 
-  }
-
-  const showItems = () => {
-
-  }
-
-  const loadMore = () => {
-
-  }
-  
   return(
     <div>
-      Observations go here
+      <div>Include date selection here</div>
+      <div>Header with column labels</div>
       <div>
-        <ObservationCard observationData={data} />
+        {
+          Object.entries(selectedData).map(([date, observations]) => (
+            <div key={date}>
+              <ObservationRow date={date.toString()} elements={observations}/>
+            </div>
+          ))
+        }
       </div>
     </div>
   )

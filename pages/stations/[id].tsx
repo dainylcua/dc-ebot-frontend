@@ -2,13 +2,14 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Container from "../../components/Container"
 import Observations from "../../components/Observations"
+import { DayData } from "../../types/main"
 
 export default function StationPage() {
   // TODO: Get all information and display it well
   const router = useRouter()
   const { id } = router.query
 
-  const [stationData, setStationData] = useState({})
+  const [stationData, setStationData] = useState<DayData>({} as DayData)
 
   const getData = async (id: string | string[]) => {
     const res = await fetch(`http://localhost:3001/stations/${id}`)
@@ -20,16 +21,15 @@ export default function StationPage() {
     getData(id).then((data) => setStationData(data))
   }, [id])
 
-
   return (
     <Container>
       {
-        stationData ?
+        stationData["days"] ?
         <>
           <h1>
             Station id: {id}
           </h1>
-          <Observations />
+          <Observations data={stationData["days"]} />
         </>
         :
         <div>Loading station data...</div>
