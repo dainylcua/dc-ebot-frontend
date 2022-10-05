@@ -3,14 +3,14 @@ import { DayData, GroupedData, GroupedObservation, GroupedParameters, Observatio
 import { daysInMonths } from "../data/monthDays"
 import { useEffect, useState } from "react"
 
-export default function Observations(data: DayData) {
+export default function Observations(data) {
   // TODO: Add observation container styling
   // TODO: Add filter by day, week, or month capability
   // TODO: Infinite scroll if day?
 
   const [monthlyData, setMonthlyData] = useState<GroupedData>({} as GroupedData)
   const [weeklyData, setWeeklyData] = useState<GroupedData>({} as GroupedData)
-  const [selectedData, setSelectedData] = useState(data["data"])
+  const [selectedData, setSelectedData] = useState<GroupedData | DayData>(data["data"])
   const [period, setPeriod] = useState("day")
 
   const getMonthlyAverages = () => {
@@ -89,8 +89,11 @@ export default function Observations(data: DayData) {
     for(let day in weeklyTotal) {
       for(let element in weeklyTotal[day]) {
         let elementProperties = weeklyTotal[day][element]
-        console.log(elementProperties)
-        elementProperties["average"] = elementProperties["average"]/7
+        if(day === "52") {
+          elementProperties["average"] = elementProperties["average"]/2
+        } else {
+          elementProperties["average"] = elementProperties["average"]/7
+        }
       }
     }
     setWeeklyData(weeklyTotal)
@@ -101,23 +104,52 @@ export default function Observations(data: DayData) {
       if(data["data"]["20171231"]) {
         getMonthlyAverages()
         getWeeklyAverages()
-        console.log(`monthly`, monthlyData)
-        console.log(weeklyData)
       }
     }
   }, [data])
 
+  useEffect(() => {
+    switch(period) {
+      case "day":
+        setSelectedData(data["data"])
+        break
+      case "week":
+        setSelectedData(weeklyData)
+        break
+      case "month":
+        setSelectedData(monthlyData)
+        break
+    }
+  }, [period])
+
   return(
     <div>
-      <div>Include date selection here</div>
+      <div>
+        {/* Include date selection here */}
+        <label htmlFor="day">
+          <input defaultChecked={true} type="radio" id="day" name="date" value="day" onClick={() => setPeriod("day")}/>
+          Day
+        </label>
+        <label htmlFor="week">
+          <input type="radio" id="week" name="date" value="week" onClick={() => setPeriod("week")}/>
+          Week
+        </label>
+        <label htmlFor="month">
+          <input type="radio" id="month" name="date" value="month" onClick={() => setPeriod("month")}/>
+          Month
+        </label>
+      </div>
       <div>Header with column labels</div>
       <div>
         {
-          Object.entries(selectedData).map(([date, observations]) => (
-            <div key={date}>
-              <ObservationRow date={date.toString()} elements={observations}/>
+          selectedData ? 
+          Object.keys(selectedData).map((key) => (
+            <div key={key}>
+              <ObservationRow date={key.toString()} elements={selectedData[key]}/>
             </div>
           ))
+          :
+          <div>Please select a time period.</div>
         }
       </div>
     </div>

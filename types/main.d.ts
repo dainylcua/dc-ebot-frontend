@@ -1,3 +1,16 @@
+export type ReceivedStationData = {
+  id: string;
+  days: DayData;
+}
+
+export type DayData = {
+  [date: string]: Observation;
+}
+
+export type Observation = {
+  [element: string]: Parameters
+}
+
 export type Parameters = {
   data: number;
   mFlag: string;
@@ -5,19 +18,6 @@ export type Parameters = {
   sFlag: string;
   observedTime: string;
 }
-
-export type Observation = {
-  [element: string]: Parameters
-}
-
-export type DayData = {
-  [date: string]: Observation;
-}
-
-export type StationCollection = {
-  [id: string]: DayData
-}
-
 
 export type GroupedData = {
   [date: string]: GroupedObservation;
