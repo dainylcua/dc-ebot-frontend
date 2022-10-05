@@ -1,48 +1,72 @@
 import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters, } from "../data/parameters"
 import { GroupedParameters, Parameters, GroupedData, DayData } from "../types/main"
+import React from "react"
 
-export default function ObservationRow({date, elements}) {
-  // const element = Object.keys(observationData)[0]
-  // const properties = observationData[element]
-  // const flags = [properties["mFlag"], properties["qFlag"], properties["sFlag"]]
-  // const observationTime = observationData["observationTime"]
-  
+export default function ObservationRow({date, elements}) {  
   const onHover = () => {
     
   }
 
   // TODO: Add observation information and layout
   return(
-    <div className="flex flex-row w-full">
-      <h2 className="justify-start">
-        {
-        `${date}`
-        // onHover, show description
-        }
-      </h2>
-      <div className="flex flex-row sm:flex-col items-end align-end w-3/4 h-32">
-        {
-          elements ?
-          Object.keys(elements).map((element) => (
-            <div key={`${date}-${element}`}>
-              {
-                elements[element]["average"] ?
-                <>
-                  {element}, {Math.round(elements[element]["average"])}
-                </>
-                :
-                <>
-                  {element}, {Math.round(elements[element]["data"])}
-                </>
-              }
-            </div>
-          ))
-          :
-          <div>Loading elements...</div>
-        }
-        <div>
-        </div>
-      </div>
-    </div>
+    <>
+    {
+      elements ?
+      Object.keys(elements).map((element) => (
+        <tr key={`${date}-${element}`}>
+          <td className="px-8 py-4 border">
+            {
+            `${date}`
+            // onHover, show description
+            }
+          </td>
+              <React.Fragment >
+                {
+                  elements[element]["average"] ?
+                  <>
+                    <td className="px-8 py-4 border">
+                      <span>
+                        {element}:
+                      </span>
+                      <span>
+                        {elements[element]["average"]}
+                      </span>
+                    </td>
+                    <td className="px-8 py-4 border">
+                      <span>
+                        {elements[element]["peak"][0]}:
+                      </span>
+                      <span>
+                        {elements[element]["peak"][1]}
+                      </span>
+                    </td>
+                    <td className="px-8 py-4 border">
+                      <span>
+                        {elements[element]["lowest"][0]}:
+                      </span>
+                      <span>
+                        {elements[element]["lowest"][1]}
+                      </span>
+                    </td>
+                  </>
+                  :
+                  <>
+                    <td className="px-8 py-4 border">
+                      {element}: {Math.round(elements[element]["data"])}
+                    </td>
+                    <td className="px-8 py-4 border">
+                      {elements[element]["mFlag"] ? <div>M: {elements[element]["mFlag"]}</div> : <></>}
+                      {elements[element]["qFlag"] ? <div>Q: {elements[element]["qFlag"]}</div> : <></>} 
+                      {elements[element]["sFlag"] ? <div>S: {elements[element]["sFlag"]}</div> : <></>} 
+                    </td>
+                  </>
+                }
+              </React.Fragment>
+        </tr>
+      ))
+    :
+      <></>
+    }
+    </>
   )
 }

@@ -26,7 +26,7 @@ export default function StationPage() {
       {
         stationData["days"] ?
         <>
-          <h1>
+          <h1 className="text-4xl font-bold">
             Station id: {id}
           </h1>
           <Observations data={stationData["days"]} />

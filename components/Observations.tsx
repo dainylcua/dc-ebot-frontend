@@ -1,11 +1,10 @@
 import ObservationRow from "./ObservationRow"
 import { DayData, GroupedData, GroupedObservation, GroupedParameters, Observation } from "../types/main"
 import { daysInMonths } from "../data/monthDays"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 export default function Observations(data) {
   // TODO: Add observation container styling
-  // TODO: Add filter by day, week, or month capability
   // TODO: Infinite scroll if day?
 
   const [monthlyData, setMonthlyData] = useState<GroupedData>({} as GroupedData)
@@ -26,19 +25,19 @@ export default function Observations(data) {
         monthlyTotal.push(data["data"][date])
       }
   
-      const formattedMonthlyTotal: GroupedObservation = monthlyTotal.reduce((total, day) => {
+      const formattedMonthlyTotal: GroupedObservation = monthlyTotal.reduce((total, day, idx) => {
         for(let element in day) {
           let dayValue = day[element]["data"]
           if(total.hasOwnProperty(element)) {
             let totalValue = total[element]
-            if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, Object.keys(day)[0]]
-            if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, Object.keys(day)[0]]
+            if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, idx]
+            if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, idx]
             totalValue["average"] += dayValue
           } else {
             total[element] = {
               average: dayValue,
-              peak: [dayValue, Object.keys(day)[0]],
-              lowest: [dayValue, Object.keys(day)[0]],
+              peak: [dayValue, idx],
+              lowest: [dayValue, idx],
             }
           }
         }
@@ -47,12 +46,12 @@ export default function Observations(data) {
 
       for(let element in formattedMonthlyTotal) {
         let elementProperties = formattedMonthlyTotal[element]
-        elementProperties["average"] = elementProperties["average"]/daysInMonths[month]
+        elementProperties["average"] = Math.round(elementProperties["average"]/daysInMonths[month])
       }
   
       setMonthlyData((prevState) => ({
         ...prevState,
-        [month]: formattedMonthlyTotal
+        [parseInt(month)]: formattedMonthlyTotal
       }))
     }
   }
@@ -68,14 +67,14 @@ export default function Observations(data) {
       for(let element in elements) {
         let value = elements[element]["data"]
         if(weekValues[element]) {
-          if(weekValues[element]["peak"][0] < value) weekValues[element]["peak"] = [value, day]
-          if(weekValues[element]["lowest"][0] > value) weekValues[element]["lowest"] = [value, day]
+          if(weekValues[element]["peak"][0] < value) weekValues[element]["peak"] = [value, dayOfTheWeek.toString()]
+          if(weekValues[element]["lowest"][0] > value) weekValues[element]["lowest"] = [value, dayOfTheWeek.toString()]
           weekValues[element]["average"] += value
         } else {
           weekValues[element] = {
             average: value,
-            peak: [value, day],
-            lowest: [value, day],
+            peak: [value, dayOfTheWeek.toString()],
+            lowest: [value, dayOfTheWeek.toString()],
           }
         }
       }
@@ -86,13 +85,13 @@ export default function Observations(data) {
       }
       daysPassed += 1
     }
-    for(let day in weeklyTotal) {
-      for(let element in weeklyTotal[day]) {
-        let elementProperties = weeklyTotal[day][element]
-        if(day === "52") {
-          elementProperties["average"] = elementProperties["average"]/2
+    for(let week in weeklyTotal) {
+      for(let element in weeklyTotal[week]) {
+        let elementProperties = weeklyTotal[week][element]
+        if(week == "52") {
+          elementProperties["average"] = Math.round(elementProperties["average"]/2)
         } else {
-          elementProperties["average"] = elementProperties["average"]/7
+          elementProperties["average"] = Math.round(elementProperties["average"]/7)
         }
       }
     }
@@ -124,34 +123,51 @@ export default function Observations(data) {
 
   return(
     <div>
-      <div>
-        {/* Include date selection here */}
-        <label htmlFor="day">
-          <input defaultChecked={true} type="radio" id="day" name="date" value="day" onClick={() => setPeriod("day")}/>
+      <div className="flex flex-row items-center w-full h-12 justify-evenly">
+        <label htmlFor="day" className="text-lg font-semibold">
+          <input defaultChecked={true} className="mr-2" type="radio" id="day" name="date" value="day" onClick={() => setPeriod("day")}/>
           Day
         </label>
-        <label htmlFor="week">
-          <input type="radio" id="week" name="date" value="week" onClick={() => setPeriod("week")}/>
+        <label htmlFor="week" className="text-lg font-semibold">
+          <input className="mr-2" type="radio" id="week" name="date" value="week" onClick={() => setPeriod("week")}/>
           Week
         </label>
-        <label htmlFor="month">
-          <input type="radio" id="month" name="date" value="month" onClick={() => setPeriod("month")}/>
+        <label htmlFor="month" className="text-lg font-semibold">
+          <input className="mr-2" type="radio" id="month" name="date" value="month" onClick={() => setPeriod("month")}/>
           Month
         </label>
       </div>
-      <div>Header with column labels</div>
-      <div>
-        {
-          selectedData ? 
-          Object.keys(selectedData).map((key) => (
-            <div key={key}>
-              <ObservationRow date={key.toString()} elements={selectedData[key]}/>
-            </div>
-          ))
-          :
-          <div>Please select a time period.</div>
-        }
-      </div>
+      <table className="w-full">
+        <thead>
+          {
+            period === "day" ?
+            <tr>
+              <th className="px-8 py-4 border">Date</th>
+              <th className="px-8 py-4 border">Observation</th>
+              <th className="px-8 py-4 border">Flags</th>
+            </tr>
+            :
+            <tr>
+              <th className="px-8 py-4 border">Date</th>
+              <th className="px-8 py-4 border">Observation Averages</th>
+              <th className="px-8 py-4 border">Observation Peaks</th>
+              <th className="px-8 py-4 border">Observation Lows</th>
+            </tr>
+          }
+        </thead>
+        <tbody>
+          {
+            selectedData ? 
+            Object.keys(selectedData).map((key) => (
+              <React.Fragment key={key}>
+                <ObservationRow date={key.toString()} elements={selectedData[key]}/>
+              </React.Fragment>
+            ))
+            :
+            <></>
+          }
+        </tbody>
+      </table>
     </div>
   )
 }
