@@ -72,12 +72,11 @@ export default function Stations() {
         stationIds.length ?
         <>
           <div>
-            Data loaded! If not all stations are available, please shut off the frontend server and wait for the backend server to parse the .csv file.
+            If not all stations/station data are available, please wait for the backend server to parse the .csv file completely (~1-2 minutes).
           </div>
           <div className="m-4">
             Be sure to hit enter after entering the station ID.
           </div>
-          
           <DebounceInput 
             type="text" 
             placeholder="Type part of a station ID. Hit Enter."

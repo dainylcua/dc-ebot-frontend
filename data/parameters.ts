@@ -1,19 +1,19 @@
 export const elementParameters = {
-  "PRCP": ["mm", "Precipitation", 10], // Precipitation (1/10 mm)
+  "PRCP": ["mm", "Precipitation", "1/10"], // Precipitation (1/10 mm)
   "SNOW": ["mm", "Snowfall", 1], // Snowfall (mm)
   "SNWD": ["mm", "Snow depth", 1], // Snow depth (mm)
-  "TMAX": ["°C", "Maximum temperature", 10], // Max temperature (1/10 °C)
-  "TMIN": ["°C", "Minimum temperature", 10], // Minimum temperature (1/10 °C)
+  "TMAX": ["°C", "Maximum temperature", "1/10"], // Max temperature ("1/10" °C)
+  "TMIN": ["°C", "Minimum temperature", "1/10"], // Minimum temperature ("1/10" °C)
   "ACMC": ["%", "Average cloudiness midnight to midnight from 30-second ceilometer data", 1],
   "ACMH": ["%", "Average cloudiness midnight to midnight from manual observations", 1],
   "ACSC": ["%", "Average cloudiness sunrise to sunset from 30-second ceilometer data", 1],
   "ACSH": ["%", "Average cloudiness sunrise to sunset from manual observations", 1],
   "ADPT": ["°C", "Average Dew Point Temperature for the day", 1],
-  "ASLP": ["hPa", "Average Sea Level Pressure for the day", 1/10], // (hPa * 10)
-  "ASTP": ["hPa", "Average Station Level Pressure for the day", 1/10], // (hPa * 10)
-  "AWBT": ["°C", "Average Wet Bulb Temperature for the day (tenths of degrees C)", 10], // (1/10 °C)
+  "ASLP": ["hPa", "Average Sea Level Pressure for the day", 10], // (hPa * 10)
+  "ASTP": ["hPa", "Average Station Level Pressure for the day", 10], // (hPa * 10)
+  "AWBT": ["°C", "Average Wet Bulb Temperature for the day (tenths of degrees C)", "1/10"], // ("1/10" °C)
   "AWDR": ["°", "Average daily wind direction", 1],
-  "AWND": ["m/s", "Number of days included in the multiday evaporation total", 10], // (1/10 m/sec)
+  "AWND": ["m/s", "Number of days included in the multiday evaporation total", "1/10"], // ("1/10" m/sec)
   "DAEV": ["days", "Number of days included in the multiday precipiation total", 1], // days included for MDEV
   "DAPR": ["days", "Number of days included in the multiday snowfall total", 1], // days included for MDPR
   "DASF": ["days", "Number of days included in the multiday minimum temperature", 1],// days included for MDSF
@@ -21,29 +21,29 @@ export const elementParameters = {
   "DATX": ["days", "Number of days included in the multiday wind movement", 1], // days included in MDTX
   "DAWM": ["days", "Number of days included in the multiday wind movement", 1], // days included in MDWM
   "DWPR": ["days", "Number of days with non-zero precipitation included in multiday precipitation total", 1], // days included in MDPR
-  "EVAP": ["mm", "Evaporation of water from evaporation pan", 10], // (1/10 mm)
+  "EVAP": ["mm", "Evaporation of water from evaporation pan", "1/10"], // ("1/10" mm)
   "FMTM": ["HHMM", "Time of fastest mile or fastest 1-minute wind", 1], // time of fastest mile or fastest 1-minute wind
   "FRGB": ["cm", "Base of frozen ground layer", 1],
   "FRGT": ["cm", "Top of frozen ground layer", 1],
   "FRTH": ["cm", "Thickness of frozen ground layer", 1],
   "GAHT": ["cm", "Difference between river and gauge height", 1],
-  "MDEV": ["mm", "Multiday evaporation total", 10], // (1/10 mm)
-  "MDPR": ["mm", "Multiday precipitation total", 1], // (1/10 mm)
+  "MDEV": ["mm", "Multiday evaporation total", "1/10"], // ("1/10" mm)
+  "MDPR": ["mm", "Multiday precipitation total", "1/10"], // ("1/10" mm)
   "MDSF": ["mm", "Multiday snowfall total", 1], // no units included, assuming mm, multiday snowfall total
   "MDTN": ["°C", "Multiday minimum temperature", 1],
   "MDTX": ["°C", "Multiday maximum temperature", 1],
   "MDWM": ["km", "Multiday wind movement", 1],
-  "MNPN": ["°C", "Daily minimum temperature of water in an evaporation pan", 1], // (1/10 °C)
-  "MXPN": ["°C", "Daily maximum temperatre of water in an evaporation pan", 1], // (1/10 °C)
+  "MNPN": ["°C", "Daily minimum temperature of water in an evaporation pan", 1], // ("1/10" °C)
+  "MXPN": ["°C", "Daily maximum temperatre of water in an evaporation pan", 1], // ("1/10" °C)
   "PGTM": ["HHMM", "Peak gust time", 1],
   "PSUN": ["%", "Daily percent of possible sunshine", 1],
   "RHAV": ["%", "Average relative humidity for the day", 1],
   "RHMN": ["°C", "Minimum relative humidity for the day", 1],
   "RHMX": ["°C", "Maximum relative humidity for the day", 1],
-  "SN*#": ["°C", "Minimum soil temperature, where * corresponds to a code for ground cover and # corresponds to a code for soil depth.\n\nGround cover codes include the following:\n0 = unknown\n1 = grass\n2 = fallow\n3 = bare ground\n4 = brome grass\n5 = sod\n6 = straw multch\n7 = grass muck\n8 = bare muck\n\nDepth codes include the following:\n1 = 5 cm\n2 = 10 cm\n3 = 20 cm\n4 = 50 cm\n = 100 cm\n6 = 150 cm\n7 = 180 cm", 10], // (1/10 °C)
-  "SX*#": ["°C", "Maximum soil temperature, where * corresponds to a code for ground cover and # corresponds to a code for soil depth.\n\nGround cover codes include the following:\n0 = unknown\n1 = grass\n2 = fallow\n3 = bare ground\n4 = brome grass\n5 = sod\n6 = straw multch\n7 = grass muck\n8 = bare muck\n\nDepth codes include the following:\n1 = 5 cm\n2 = 10 cm\n3 = 20 cm\n4 = 50 cm\n = 100 cm\n6 = 150 cm\n7 = 180 cm", 10], // (1/10 °C)
-  "TAVG": ["°C", "Average temperature\n\n[Note that TAVG from source 'S' corresponds to an average for the period ending at 2400 UTC rather than local midnight]", 10], // (1/10 °C)
-  "THIC": ["mm", "Thickness of ice on water", 10], // (1/10 mm)
+  "SN*#": ["°C", "Minimum soil temperature, where * corresponds to a code for ground cover and # corresponds to a code for soil depth.\n\nGround cover codes include the following:\n0 = unknown\n1 = grass\n2 = fallow\n3 = bare ground\n4 = brome grass\n5 = sod\n6 = straw multch\n7 = grass muck\n8 = bare muck\n\nDepth codes include the following:\n1 = 5 cm\n2 = 10 cm\n3 = 20 cm\n4 = 50 cm\n = 100 cm\n6 = 150 cm\n7 = 180 cm", "1/10"], // ("1/10" °C)
+  "SX*#": ["°C", "Maximum soil temperature, where * corresponds to a code for ground cover and # corresponds to a code for soil depth.\n\nGround cover codes include the following:\n0 = unknown\n1 = grass\n2 = fallow\n3 = bare ground\n4 = brome grass\n5 = sod\n6 = straw multch\n7 = grass muck\n8 = bare muck\n\nDepth codes include the following:\n1 = 5 cm\n2 = 10 cm\n3 = 20 cm\n4 = 50 cm\n = 100 cm\n6 = 150 cm\n7 = 180 cm", "1/10"], // ("1/10" °C)
+  "TAVG": ["°C", "Average temperature\n\n[Note that TAVG from source 'S' corresponds to an average for the period ending at 2400 UTC rather than local midnight]", "1/10"], // ("1/10" °C)
+  "THIC": ["mm", "Thickness of ice on water", "1/10"], // ("1/10" mm)
   "TOBS": ["°C", "Temperature at the time of observation", 1],
   "TSUN": ["minutes", "Daily total sunshine", 1],
   "WDF1": ["°", "Direction of fastest 1-minute wind", 1],
@@ -53,14 +53,14 @@ export const elementParameters = {
   "WDFI": ["°", "Direction of highest instantaneous wind", 1],
   "WDFM": ["°", "Fastest mile wind direction", 1],
   "WDMV": ["km", "24-hour wind movement", 1],
-  "WESD": ["mm", "Water equivalent of snow on the ground", 10], // (1/10 mm)
-  "WESF": ["mm", "Water equivalent of snowfall", 10], // (1/10 mm)
-  "WSF1": ["m/s", "Fastest 1-minute wind speed", 10], // (1/10 m/s)
-  "WSF2": ["m/s", "Fastest 2-minute wind speed", 10], // (1/10 m/s)
-  "WSF5": ["m/s", "Fastest 5-minute wind speed", 10], // (1/10 m/s)
-  "WSFG": ["m/s", "Peak gust wind speed", 10], // (1/10 m/s)
-  "WSFI": ["m/s", "Highest instantaneous wind speed", 10], // (1/10 m/s)
-  "WSFM": ["m/s", "Fastest mile wind speed", 10], // (1/10 m/s)
+  "WESD": ["mm", "Water equivalent of snow on the ground", "1/10"], // ("1/10" mm)
+  "WESF": ["mm", "Water equivalent of snowfall", "1/10"], // ("1/10" mm)
+  "WSF1": ["m/s", "Fastest 1-minute wind speed", "1/10"], // ("1/10" m/s)
+  "WSF2": ["m/s", "Fastest 2-minute wind speed", "1/10"], // ("1/10" m/s)
+  "WSF5": ["m/s", "Fastest 5-minute wind speed", "1/10"], // ("1/10" m/s)
+  "WSFG": ["m/s", "Peak gust wind speed", "1/10"], // ("1/10" m/s)
+  "WSFI": ["m/s", "Highest instantaneous wind speed", "1/10"], // ("1/10" m/s)
+  "WSFM": ["m/s", "Fastest mile wind speed", "1/10"], // ("1/10" m/s)
   "WT**": ["", "Weather Type where ** has one of the following values:\n01 = Fog, ice fog, or freezing fog(may include heavy fog)\n02 = Heavy fog or heaving freezing fog (not always distinquished from fog)\n03 = Thunder\n04 = Ice pellets, sleet, snow pellets, or small hail\n05 = Hail (may include small hail)\n06 = Glaze or rime\n07 = Dust, volcanic ash, blowing dust, blowing sand, or blowing obstruction\n08 = Smoke or haze\n09 = Blowing or drifting snow\n10 = Tornado, waterspout, or funnel cloud\n11 = High or damaging winds\n12 = Blowing spray\n13 = Mist\n14 = Drizzle\n15 = Freezing drizzle\n16 = Rain (may include freezing rain, drizzle, and freezing drizzle)\n17 = Freezing rain\n18 = Snow, snow pellets, snow grains, or ice crystals\n19 = Unknown source of precipitation\n21 = Ground fog\n22 = Ice fog or freezing fog", 1],
   "WV**": ["", "Weather in the Vicinity where ** has one of the following values:\n01 = Fog, ice fog, or freezing fog (may include heavy fog)\n03 = Thunder\n07 = Ash, dust, sand, or other blowing obstruction\n18 = Snow or ice crystals\n20 = Rain or snow shower", 1],
 }

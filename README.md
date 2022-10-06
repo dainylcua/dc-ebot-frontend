@@ -1,34 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NOAA Station Data Lookup App, by Dainyl Cua
 
-## Getting Started
+This app requires 
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Page Overview
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Challenges faced during development
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* Long query times, as per initial email (solved by making the .csv file parse into a global variable)
+* Data still takes a long time to load on startup (~1-2 minutes) due to local parsing of large rows of data, as opposed to a tradiitional databse or CMS.
+* Unable to utilize static site generation and server-side rendering to improve performance due to loading from a .csv file instead of a traditional database or CMS
+* Some function parameter types in Observations.tsx do not line up properly, the any type is used instead
+* Columns shift around when changing time period in Observations.tsx and ObservationRow.tsx
+* Right border of column in Observations.tsx is cut off when time period is set to day
+* Some data show up as NaN in data
 
-## Learn More
+## Potential Improvements
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Implement dynamic on-hover tooltips to show element parameters without needing to chekc the `/parameters` page.

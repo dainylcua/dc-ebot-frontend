@@ -4,9 +4,7 @@ import { daysInMonths } from "../data/monthDays"
 import React, { useEffect, useState } from "react"
 
 export default function Observations(data) {
-  // TODO: Add observation container styling
-  // TODO: Infinite scroll if day?
-
+  // TODO: Fix NaN
   const [monthlyData, setMonthlyData] = useState<GroupedData>({} as GroupedData)
   const [weeklyData, setWeeklyData] = useState<GroupedData>({} as GroupedData)
   const [selectedData, setSelectedData] = useState<GroupedData | DayData>(data["data"])
@@ -32,7 +30,7 @@ export default function Observations(data) {
             let totalValue = total[element]
             if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, idx+1]
             if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, idx+1]
-            totalValue["average"] += dayValue
+            totalValue["average"] += (Number(dayValue) || 0)
           } else {
             total[element] = {
               average: dayValue,
@@ -69,7 +67,7 @@ export default function Observations(data) {
         if(weekValues[element]) {
           if(weekValues[element]["peak"][0] < value) weekValues[element]["peak"] = [value, dayOfTheWeek.toString()]
           if(weekValues[element]["lowest"][0] > value) weekValues[element]["lowest"] = [value, dayOfTheWeek.toString()]
-          weekValues[element]["average"] += value
+          weekValues[element]["average"] += (Number(value) || 0)
         } else {
           weekValues[element] = {
             average: value,
@@ -110,8 +108,8 @@ export default function Observations(data) {
   useEffect(() => {
     switch(period) {
       case "day":
-        setSelectedData(data["data"])
-        break
+          setSelectedData(data["data"])
+          break
       case "week":
         setSelectedData(weeklyData)
         break

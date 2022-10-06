@@ -18,9 +18,9 @@ export default function Header() {
           Stations
         </a>
       </Link>
-      <Link href="/challenges">
+      <Link href="/parameters">
         <a className={`active:text-black active:bg-zinc-300 hover:bg-zinc-300 px-1.5 rounded-md text-lg font-semibold transition-colors ease-in-out mx-16 ${startRoute === "/notes" ? 'bg-zinc-200' : 'text-zinc-500'}`}>
-          Challenges
+          Data Parameters
         </a>
       </Link>
     </div>

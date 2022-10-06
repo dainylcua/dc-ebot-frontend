@@ -1,16 +1,13 @@
-import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters } from "../data/parameters"
+import { elementParameters } from "../data/parameters"
 import { monthNames, dayNames, ordinalIndicators } from "../data/monthDays"
 import React from "react"
 
 export default function ObservationRow({date, elements, period}) {    
   const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
-
-  // console.log(elements)
   
-  const onHover = (type, value) => {
-    
+  const params = (value) => {
+    return `(${elementParameters[value][2]} ${elementParameters[value][0]})`
   }
-
 
   // TODO: Add observation information and layout
   return(
@@ -38,7 +35,7 @@ export default function ObservationRow({date, elements, period}) {
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
-                            {elements[element]["average"].toFixed(2)}
+                            {elements[element]["average"].toFixed(2)} {params(element)}
                           </div>
                         </td>
                         <td className="px-8 py-4 border">
@@ -64,7 +61,7 @@ export default function ObservationRow({date, elements, period}) {
                           {element}
                         </td>
                         <td className="px-8 py-4 border">
-                          {elements[element]["average"].toFixed(2)}
+                          {elements[element]["average"].toFixed(2)} {params(element)}
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
@@ -89,7 +86,7 @@ export default function ObservationRow({date, elements, period}) {
                       {element}
                     </td>
                     <td className="px-8 py-4 border">
-                      {Math.round(elements[element]["data"])}
+                      {Math.round(elements[element]["data"])} {params(element)}
                     </td>
                     <td className="px-8 py-4 border">
                       {elements[element]["mFlag"] ? <div>M: {elements[element]["mFlag"]}</div> : <></>}
