@@ -1,11 +1,27 @@
 # NOAA Station Data Lookup App, by Dainyl Cua
 
-This app requires 
+* Framework: Next.js
+* Backend: Express
+* Styling: TailwindCSS
+* Language: TypeScript
 
+This app requires its complementary backend server, [dc-ebot-backend](https://github.com/dainylcua/dc-ebot-backend), to be running in order to function properly.
 
+## Getting Started
 
+Navigate to the directory you wish to store this repository in and run the following command in your command prompt:
+
+```bash
+git clone https://github.com/dainylcua/dc-ebot-frontend.git
+npm run dev
+```
 
 ## Page Overview
+
+* `/`: Landing page
+* `/stations`: Station lookup by ID (partial or total) page
+* `/stations/[id]`: Specific station data page
+* `/parameters`: Data parameter page
 
 ## Challenges faced during development
 
@@ -19,4 +35,4 @@ This app requires
 
 ## Potential Improvements
 
-* Implement dynamic on-hover tooltips to show element parameters without needing to chekc the `/parameters` page.
+* Implement dynamic on-hover tooltips to show element parameters without needing to check the `/parameters` page.
