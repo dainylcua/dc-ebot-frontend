@@ -20,7 +20,7 @@ export default function ObservationRow({date, elements}) {
             // onHover, show description
             }
           </td>
-              <React.Fragment >
+              <React.Fragment>
                 {
                   elements[element]["average"] ?
                   <>

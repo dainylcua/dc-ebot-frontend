@@ -7,7 +7,7 @@ export default function Header() {
   const reg = /[/][\w]+/g
   const startRoute = (router.asPath.match(reg) ? router.asPath.match(reg)[0] : "/")
   return(
-    <div className="flex flex-row w-4/5 h-24 py-8 mx-auto border-b border-black">
+    <div className="flex flex-row w-4/5 h-24 py-8 mx-auto border-b border-black justify-evenly">
       <Link href="/">
         <a className={`active:text-black active:bg-zinc-300 hover:bg-zinc-300 px-1.5 rounded-md text-lg font-semibold transition-colors ease-in-out mx-16 ${startRoute === "/" ? 'bg-zinc-200' : 'text-zinc-500'}`}>
           Main Page
@@ -18,9 +18,9 @@ export default function Header() {
           Stations
         </a>
       </Link>
-      <Link href="/notes">
+      <Link href="/challenges">
         <a className={`active:text-black active:bg-zinc-300 hover:bg-zinc-300 px-1.5 rounded-md text-lg font-semibold transition-colors ease-in-out mx-16 ${startRoute === "/notes" ? 'bg-zinc-200' : 'text-zinc-500'}`}>
-          Notes
+          Challenges
         </a>
       </Link>
     </div>
