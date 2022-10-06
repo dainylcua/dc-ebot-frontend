@@ -13,6 +13,7 @@ Navigate to the directory you wish to store this repository in and run the follo
 
 ```bash
 git clone https://github.com/dainylcua/dc-ebot-frontend.git
+cd dc-ebot-frontend
 npm run dev
 ```
 
@@ -25,7 +26,6 @@ npm run dev
 
 ## Challenges faced during development
 
-* ~~Long query times, as per initial email~~ (solved by making the .csv file parse into a global variable)
 * Data still takes a long time to load on startup (~1-2 minutes) due to local parsing of large rows of data, as opposed to a tradiitional databse or CMS.
 * Unable to utilize static site generation and server-side rendering to improve performance due to loading from a .csv file instead of a traditional database or CMS
 * Some function parameter types in Observations.tsx do not line up properly, the any type is used instead
