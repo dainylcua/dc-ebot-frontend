@@ -25,34 +25,35 @@ export default function ObservationRow({date, elements}) {
                   elements[element]["average"] ?
                   <>
                     <td className="px-8 py-4 border">
-                      <span>
-                        {element}:
-                      </span>
-                      <span>
-                        {elements[element]["average"]}
-                      </span>
+                      {element}
                     </td>
                     <td className="px-8 py-4 border">
-                      <span>
-                        {elements[element]["peak"][0]}:
-                      </span>
-                      <span>
-                        {elements[element]["peak"][1]}
-                      </span>
+                      {elements[element]["average"]}
                     </td>
                     <td className="px-8 py-4 border">
-                      <span>
-                        {elements[element]["lowest"][0]}:
-                      </span>
-                      <span>
-                        {elements[element]["lowest"][1]}
-                      </span>
+                      <div>
+                        {elements[element]["peak"][0]}
+                      </div>
+                      <div>
+                        On: {elements[element]["peak"][1]}
+                      </div>
+                    </td>
+                    <td className="px-8 py-4 border">
+                      <div>
+                        {elements[element]["lowest"][0]}
+                      </div>
+                      <div>
+                        On: {elements[element]["lowest"][1]}
+                      </div>
                     </td>
                   </>
                   :
                   <>
                     <td className="px-8 py-4 border">
-                      {element}: {Math.round(elements[element]["data"])}
+                      {element}
+                    </td>
+                    <td className="px-8 py-4 border">
+                      {Math.round(elements[element]["data"])}
                     </td>
                     <td className="px-8 py-4 border">
                       {elements[element]["mFlag"] ? <div>M: {elements[element]["mFlag"]}</div> : <></>}

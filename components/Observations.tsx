@@ -144,14 +144,16 @@ export default function Observations(data) {
             <tr>
               <th className="px-8 py-4 border">Date</th>
               <th className="px-8 py-4 border">Observation</th>
+              <th className="px-8 py-4 border">Value</th>
               <th className="px-8 py-4 border">Flags</th>
             </tr>
             :
             <tr>
               <th className="px-8 py-4 border">Date</th>
-              <th className="px-8 py-4 border">Observation Averages</th>
-              <th className="px-8 py-4 border">Observation Peaks</th>
-              <th className="px-8 py-4 border">Observation Lows</th>
+              <th className="px-8 py-4 border">Observation</th>
+              <th className="px-8 py-4 border">Averages</th>
+              <th className="px-8 py-4 border">Peaks</th>
+              <th className="px-8 py-4 border">Lows</th>
             </tr>
           }
         </thead>
