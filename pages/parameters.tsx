@@ -1,9 +1,13 @@
 import Container from "../components/Container"
 import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters } from "../data/parameters"
+import Head from "next/head"
 
 export default function Parameters() {
   return (
     <Container>
+      <Head>
+        <title>Parameters</title>
+      </Head>
       <h2 className="mb-8 text-4xl font-bold">Data Parameters</h2>
       <div>
         <h3 className="text-3xl font-semibold">Element Parameters:</h3>

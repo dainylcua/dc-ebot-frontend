@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from "react"
 import { DebounceInput } from "react-debounce-input"
 import InfiniteScroll from "react-infinite-scroller"
 import Link from "next/link"
+import Head from "next/head"
 
 export default function Stations() {
   // TODO: Improve layout
@@ -67,6 +68,9 @@ export default function Stations() {
 
   return (
     <Container>
+      <Head>
+        <title>Stations</title>
+      </Head>
       <h1 className="pb-8 text-4xl font-bold text-center">NOAA Station Data Lookup</h1>
       {
         stationIds.length ?

@@ -2,7 +2,8 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Container from "../../components/Container"
 import Observations from "../../components/Observations"
-import { DayData, ReceivedStationData } from "../../types/main"
+import { ReceivedStationData } from "../../types/main"
+import Head from "next/head"
 
 export default function StationPage() {
   // TODO: Get all information and display it well
@@ -23,6 +24,9 @@ export default function StationPage() {
 
   return (
     <Container>
+      <Head>
+        <title>Station {id}</title>
+      </Head>
       {
         stationData["days"] ?
         <>
