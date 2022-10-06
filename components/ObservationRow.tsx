@@ -1,9 +1,11 @@
-import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters, } from "../data/parameters"
-import { GroupedParameters, Parameters, GroupedData, DayData } from "../types/main"
+import { elementParameters, mFlagParameters, sFlagParameters, qFlagParameters } from "../data/parameters"
+import { monthNames, dayNames, ordinalIndicators } from "../data/monthDays"
 import React from "react"
 
-export default function ObservationRow({date, elements}) {  
-  const onHover = () => {
+export default function ObservationRow({date, elements, period}) {    
+  const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+  
+  const onHover = (type, value) => {
     
   }
 
@@ -16,37 +18,66 @@ export default function ObservationRow({date, elements}) {
         <tr key={`${date}-${element}`}>
           <td className="px-8 py-4 border">
             {
-            `${date}`
-            // onHover, show description
+              period === "month" ? monthNames[date]
+                : period === "week" ?
+                    date
+                :
+                  new Date(formattedDate).toLocaleDateString('en-US', {timeZone: 'UTC', timeZoneName: 'short'})
             }
           </td>
               <React.Fragment>
                 {
                   elements[element]["average"] ?
-                  <>
-                    <td className="px-8 py-4 border">
-                      {element}
-                    </td>
-                    <td className="px-8 py-4 border">
-                      {elements[element]["average"]}
-                    </td>
-                    <td className="px-8 py-4 border">
-                      <div>
-                        {elements[element]["peak"][0]}
-                      </div>
-                      <div>
-                        On: {elements[element]["peak"][1]}
-                      </div>
-                    </td>
-                    <td className="px-8 py-4 border">
-                      <div>
-                        {elements[element]["lowest"][0]}
-                      </div>
-                      <div>
-                        On: {elements[element]["lowest"][1]}
-                      </div>
-                    </td>
-                  </>
+                    period === "month" ?
+                      <>
+                        <td className="px-8 py-4 border">
+                          {element}
+                        </td>
+                        <td className="px-8 py-4 border">
+                          {elements[element]["average"].toString()}
+                        </td>
+                        <td className="px-8 py-4 border">
+                          <div>
+                            {elements[element]["peak"][0].toString()}
+                          </div>
+                          <div>
+                            On: {elements[element]["peak"][1]}{ordinalIndicators[elements[element]["peak"]] ? ordinalIndicators[elements[element]["peak"]] : 'th'}
+                          </div>
+                        </td>
+                        <td className="px-8 py-4 border">
+                          <div>
+                            {elements[element]["lowest"][0].toString()}
+                          </div>
+                          <div>
+                            On: {elements[element]["lowest"][1]}{ordinalIndicators[elements[element]["peak"]] ? ordinalIndicators[elements[element]["peak"]] : 'th'}
+                          </div>
+                        </td>
+                      </>
+                    :
+                      <>
+                        <td className="px-8 py-4 border">
+                          {element}
+                        </td>
+                        <td className="px-8 py-4 border">
+                          {elements[element]["average"].toString()}
+                        </td>
+                        <td className="px-8 py-4 border">
+                          <div>
+                            {elements[element]["peak"][0].toString()}
+                          </div>
+                          <div>
+                            On: {dayNames[elements[element]["peak"][1]]}
+                          </div>
+                        </td>
+                        <td className="px-8 py-4 border">
+                          <div>
+                            {elements[element]["lowest"][0].toString()}
+                          </div>
+                          <div>
+                            On: {dayNames[elements[element]["lowest"][1]]}
+                          </div>
+                        </td>
+                      </>
                   :
                   <>
                     <td className="px-8 py-4 border">

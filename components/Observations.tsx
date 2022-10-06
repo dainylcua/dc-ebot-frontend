@@ -123,7 +123,7 @@ export default function Observations(data) {
 
   return(
     <div>
-      <div className="flex flex-row items-center w-full h-12 justify-evenly">
+      <div className="flex flex-row items-center w-full h-12 mb-8 justify-evenly">
         <label htmlFor="day" className="text-lg font-semibold">
           <input defaultChecked={true} className="mr-2" type="radio" id="day" name="date" value="day" onClick={() => setPeriod("day")}/>
           Day
@@ -149,7 +149,12 @@ export default function Observations(data) {
             </tr>
             :
             <tr>
-              <th className="px-8 py-4 border">Date</th>
+              {
+                period === "week" ?
+                <th className="px-8 py-4 border">Week</th>
+                :
+                <th className="px-8 py-4 border">Month</th>
+              }
               <th className="px-8 py-4 border">Observation</th>
               <th className="px-8 py-4 border">Averages</th>
               <th className="px-8 py-4 border">Peaks</th>
@@ -162,7 +167,7 @@ export default function Observations(data) {
             selectedData ? 
             Object.keys(selectedData).map((key) => (
               <React.Fragment key={key}>
-                <ObservationRow date={key.toString()} elements={selectedData[key]}/>
+                <ObservationRow date={key.toString()} elements={selectedData[key]} period={period}/>
               </React.Fragment>
             ))
             :
