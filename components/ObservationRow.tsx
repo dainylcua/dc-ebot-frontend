@@ -4,10 +4,13 @@ import React from "react"
 
 export default function ObservationRow({date, elements, period}) {    
   const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+  // console.log(elements)
   
   const onHover = (type, value) => {
     
   }
+
 
   // TODO: Add observation information and layout
   return(
@@ -34,11 +37,13 @@ export default function ObservationRow({date, elements, period}) {
                           {element}
                         </td>
                         <td className="px-8 py-4 border">
-                          {elements[element]["average"].toString()}
+                          <div>
+                            {elements[element]["average"].toFixed(2)}
+                          </div>
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
-                            {elements[element]["peak"][0].toString()}
+                            {elements[element]["peak"][0]}
                           </div>
                           <div>
                             On: {elements[element]["peak"][1]}{ordinalIndicators[elements[element]["peak"]] ? ordinalIndicators[elements[element]["peak"]] : 'th'}
@@ -46,7 +51,7 @@ export default function ObservationRow({date, elements, period}) {
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
-                            {elements[element]["lowest"][0].toString()}
+                            {elements[element]["lowest"][0]}
                           </div>
                           <div>
                             On: {elements[element]["lowest"][1]}{ordinalIndicators[elements[element]["peak"]] ? ordinalIndicators[elements[element]["peak"]] : 'th'}
@@ -59,11 +64,11 @@ export default function ObservationRow({date, elements, period}) {
                           {element}
                         </td>
                         <td className="px-8 py-4 border">
-                          {elements[element]["average"].toString()}
+                          {elements[element]["average"].toFixed(2)}
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
-                            {elements[element]["peak"][0].toString()}
+                            {elements[element]["peak"][0]}
                           </div>
                           <div>
                             On: {dayNames[elements[element]["peak"][1]]}
@@ -71,7 +76,7 @@ export default function ObservationRow({date, elements, period}) {
                         </td>
                         <td className="px-8 py-4 border">
                           <div>
-                            {elements[element]["lowest"][0].toString()}
+                            {elements[element]["lowest"][0]}
                           </div>
                           <div>
                             On: {dayNames[elements[element]["lowest"][1]]}

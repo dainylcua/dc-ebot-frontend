@@ -27,17 +27,17 @@ export default function Observations(data) {
   
       const formattedMonthlyTotal: GroupedObservation = monthlyTotal.reduce((total, day, idx) => {
         for(let element in day) {
-          let dayValue = day[element]["data"]
+          let dayValue = parseInt(day[element]["data"])
           if(total.hasOwnProperty(element)) {
             let totalValue = total[element]
-            if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, idx]
-            if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, idx]
+            if(totalValue["peak"][0] < dayValue) totalValue["peak"] = [dayValue, idx+1]
+            if(totalValue["lowest"][0] > dayValue) totalValue["lowest"] = [dayValue, idx+1]
             totalValue["average"] += dayValue
           } else {
             total[element] = {
               average: dayValue,
-              peak: [dayValue, idx],
-              lowest: [dayValue, idx],
+              peak: [dayValue, idx+1],
+              lowest: [dayValue, idx+1],
             }
           }
         }
@@ -46,7 +46,7 @@ export default function Observations(data) {
 
       for(let element in formattedMonthlyTotal) {
         let elementProperties = formattedMonthlyTotal[element]
-        elementProperties["average"] = Math.round(elementProperties["average"]/daysInMonths[month])
+        elementProperties["average"] = elementProperties["average"]/daysInMonths[month]
       }
   
       setMonthlyData((prevState) => ({
@@ -89,9 +89,9 @@ export default function Observations(data) {
       for(let element in weeklyTotal[week]) {
         let elementProperties = weeklyTotal[week][element]
         if(week == "52") {
-          elementProperties["average"] = Math.round(elementProperties["average"]/2)
+          elementProperties["average"] = elementProperties["average"]/2
         } else {
-          elementProperties["average"] = Math.round(elementProperties["average"]/7)
+          elementProperties["average"] = elementProperties["average"]/7
         }
       }
     }
